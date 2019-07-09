@@ -5,8 +5,8 @@
       "Effect": "Allow",
       "Action": ["s3:*"],
       "Resource": [
-        "arn:aws:s3:::weekly-minecraft",
-        "arn:aws:s3:::weekly-minecraft/*"
+        "arn:aws:s3:::minecraft-server-cg",
+        "arn:aws:s3:::minecraft-server-cg/*"
       ]
     },
     {

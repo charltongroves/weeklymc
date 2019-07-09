@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-southeast-2"
 }
 
 ##################################################################
@@ -41,20 +41,13 @@ data "aws_subnet_ids" "all" {
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
+  owners = ["099720109477"]
 
   filter {
     name = "name"
 
     values = [
       "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
-    ]
-  }
-
-  filter {
-    name = "owner-id"
-
-    values = [
-      "099720109477",
     ]
   }
 }
@@ -100,9 +93,9 @@ module "ec2" {
   ami                         = "${data.aws_ami.amazon_linux.id}"
   instance_type               = "t2.medium"
   iam_instance_profile        = "${aws_iam_instance_profile.craft_profile.name}"
-  subnet_id                   = "${element(data.aws_subnet_ids.all.ids, 0)}"
+  subnet_id                   = "${element(tolist(data.aws_subnet_ids.all.ids), 0)}"
   vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
-  key_name                    = "weekly-minecraft"
+  key_name                    = "minecraft-server"
   user_data                   = "${data.template_file.init.rendered}"
   associate_public_ip_address = true
 }

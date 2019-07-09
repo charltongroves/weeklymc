@@ -13,12 +13,12 @@ export SCRIPTDIR=/opt/github.com/weeklymc
 # Clone scripts from git
 mkdir -p /opt/github.com && cd /opt/github.com
 
-git config --global user.name Brandon
-git config --global user.email weeklymc@anon.subdavis.com
+git config --global user.name charltongroves
+git config --global user.email charltongroves@gmail.com
 
 if [ ! -d "$SCRIPTDIR" ]
 then
-    git clone https://github.com/subdavis/weeklymc
+    git clone https://github.com/charltongroves/weeklymc
     cd weeklymc
 else
     cd weeklymc
