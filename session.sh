@@ -19,8 +19,8 @@ session-begin () {
 
 session-end () {
     echo "[$(date)] ANNOUNCE end session" >> $LOGFILE
-    tmux send-keys -t $SERVER_SESSION_NAME 'say Server going down in 30 seconds' Enter
-    sleep 30
+    tmux send-keys -t $SERVER_SESSION_NAME 'say Server going down in 10 seconds' Enter
+    sleep 10
 
     echo "[$(date)] GRACEFULLY STOPPING tmux session" >> $LOGFILE
     # Gracefully stop the server
@@ -31,7 +31,7 @@ session-end () {
     if [ "$(tmux ls 2>/dev/null | wc -l)" != "0" ]; then
         echo "[$(date)] UN-GRACEFULLY STOPPING tmux session" >> $LOGFILE
         tmux kill-session -t $SERVER_SESSION_NAME
-        sleep 15
+        sleep 10
     fi
     # Backup
     pushd .

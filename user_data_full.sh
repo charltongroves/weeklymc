@@ -88,11 +88,12 @@ else
 	#echo new cron into cron file
 	echo "$STARTCRON   $SCRIPTDIR/session.sh begin                              >> $LOGDIR/begin.log 2>&1"  >> newcron
 	echo "$STOPCRON    $SCRIPTDIR/session.sh end                                >> $LOGDIR/end.log 2>&1"    >> newcron
-	echo "$NOTIFY_TIME $SCRIPTDIR/session.sh notify players \"$NOTIFY_MESSAGE\" >> $LOGDIR/notify.log 2>&1" >> newcron
+	echo "$NOTIFY_TIME $SCRIPTDIR/session.sh alert players \"$NOTIFY_MESSAGE\" >> $LOGDIR/notify.log 2>&1" >> newcron
 fi
 
 # Always run this script at reboot.
 echo "@reboot $SCRIPTDIR/user_data_thin.sh >> $LOGDIR/boot.log 2>&1" >> newcron
+echo "*/5 * * * * if curl -s http://169.254.169.254/latest/meta-data/spot/termination-time | grep -q .*T.*Z; then $SCRIPTDIR/session.sh end; fi >> " >> newcron
 #install new cron file
 crontab newcron
 rm newcron currentcron
