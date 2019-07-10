@@ -27,4 +27,4 @@ ROUTE53_ZONE="Z14O8UHZP5Z5N4"
 ROUTE53_DOMAIN="boyztown.net"
 # Enabled Plugins.  If the plugin is in this list, it should have a JAR available in s3://$S3BUCKET/plugins/
 # It should also have a config folder in plugins/
-ENABLED_PLUGINS=""
+ENABLED_PLUGINS="TreeCapitator.jar ChestSort.jar"
