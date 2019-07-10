@@ -1,0 +1,14 @@
+// SSH to server
+ssh -i ~/keys/minecraft-server.pem ubuntu@ec2-13-211-234-254.ap-southeast-2.compute.amazonaws.com
+
+// Start server
+/opt/github.com/weeklymc/session.sh begin
+
+// Stop and backup server
+/opt/github.com/weeklymc/session.sh end
+
+// Send stuff to server
+sudo tmux send-keys -t mc 'say YEEET' Enter
+
+// Get into the server
+sudo tmux attach -t mc
