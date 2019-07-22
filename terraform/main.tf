@@ -86,7 +86,7 @@ data "template_file" "init" {
   template = "${file("${path.module}/../user_data_thin.sh")}"
 }
 
-module "ec2" {
+resource "aws_spot_instance_request" "craft" {
   source = "github.com/terraform-aws-modules/terraform-aws-ec2-instance"
 
   name                        = "craft"

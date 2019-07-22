@@ -93,7 +93,8 @@ fi
 
 # Always run this script at reboot.
 echo "@reboot $SCRIPTDIR/user_data_thin.sh >> $LOGDIR/boot.log 2>&1" >> newcron
-echo "*/5 * * * * if curl -s http://169.254.169.254/latest/meta-data/spot/termination-time | grep -q .*T.*Z; then $SCRIPTDIR/session.sh end; fi >> " >> newcron
+echo "*/5 * * * * if curl -s http://169.254.169.254/latest/meta-data/spot/termination-time | grep -q .*T.*Z; then $SCRIPTDIR/session.sh end; fi " >> newcron
+echo "0 */2 * * * $SCRIPTDIR/session.sh end; sleep 10; $SCRIPTDIR/session.sh begin " >> newcron
 #install new cron file
 crontab newcron
 rm newcron currentcron

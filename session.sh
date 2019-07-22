@@ -59,6 +59,10 @@ server-backup () {
     else
         echo "[$(date)] ERROR no world to back up" >> $LOGFILE
     fi
+    # Put plugins back
+    for p in $(echo "$ENABLED_PLUGINS"); do
+      aws s3 cp s3://$S3BUCKET/plugins/$p $APPDIR/worlddata/plugins/$p
+    done
 }
 
 server-run () {
