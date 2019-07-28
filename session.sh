@@ -25,7 +25,7 @@ session-begin-ftb () {
 
 session-end () {
     echo "[$(date)] ANNOUNCE end session" >> $LOGFILE
-    tmux send-keys -t $SERVER_SESSION_NAME 'say Server going down in 10 seconds' Enter
+    tmux send-keys -t $SERVER_SESSION_NAME 'say Server going down in 10 seconds for backup. yah yeet.' Enter
     sleep 10
 
     echo "[$(date)] GRACEFULLY STOPPING tmux session" >> $LOGFILE
