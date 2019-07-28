@@ -87,9 +87,7 @@ data "template_file" "init" {
 }
 
 resource "aws_spot_instance_request" "craft" {
-  source = "github.com/terraform-aws-modules/terraform-aws-ec2-instance"
 
-  name                        = "craft"
   ami                         = "${data.aws_ami.amazon_linux.id}"
   instance_type               = "t2.medium"
   iam_instance_profile        = "${aws_iam_instance_profile.craft_profile.name}"
@@ -98,4 +96,9 @@ resource "aws_spot_instance_request" "craft" {
   key_name                    = "minecraft-server"
   user_data                   = "${data.template_file.init.rendered}"
   associate_public_ip_address = true
+  instance_interruption_behaviour = "stop"
+
+  tags = {
+    Name = "craft"
+  }
 }
