@@ -17,6 +17,12 @@ session-begin () {
     tmux new-session -d -s $SERVER_SESSION_NAME "$SCRIPTDIR/session.sh runserver"
 }
 
+session-begin-ftb () {
+    # Start the server in a tmux session
+    echo "[$(date)] BEGINNING session" >> $LOGFILE
+    tmux new-session -d -s $SERVER_SESSION_NAME "$SCRIPTDIR/session.sh runserver-ftb"
+}
+
 session-end () {
     echo "[$(date)] ANNOUNCE end session" >> $LOGFILE
     tmux send-keys -t $SERVER_SESSION_NAME 'say Server going down in 10 seconds' Enter
@@ -87,6 +93,17 @@ server-run () {
         [ $code -eq 0 ] && break;
         echo "[$(date)] SERVER FAILED UN-GRACEFULLY with exit code $code" >> $LOGFILE
     done
+    echo "[$(date)] ENDED server rest
+    
+    
+    art loop -- Goodbye" >> $LOGFILE
+}
+
+server-run-ftb () {
+    # This script is for starting a server. 
+    cd $APPDIR/ftb
+    echo "eula=true" > eula.txt
+    ./ServerStart
     echo "[$(date)] ENDED server restart loop -- Goodbye" >> $LOGFILE
 }
 
@@ -102,6 +119,14 @@ case $1 in
     end)
         shift
         session-end
+        ;;
+    begin-ftb)
+        shift
+        session-begin-ftb
+        ;;
+    runserver-ftb)
+        shift
+        server-run-ftb
         ;;
     runserver)
         shift

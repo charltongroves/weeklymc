@@ -64,6 +64,14 @@ done
 # Get server jar from S3 if it doesn't exist.
 aws s3 cp s3://$S3BUCKET/jars/spigot.jar $APPDIR/spigot.jar
 
+# install ftb
+mkdir $APPDIR/ftb
+aws s3 cp s3://$S3BUCKET/ftb.zip $APPDIR/ftb/ftb.zip
+cd $APPDIR/ftb
+unzip ftb.zip
+echo "eula=true" > eula.txt
+cd $APPDIR
+
 # Get the plugins from S3
 for p in $(echo "$ENABLED_PLUGINS"); do
 	aws s3 cp s3://$S3BUCKET/plugins/$p $APPDIR/worlddata/plugins/$p
@@ -83,7 +91,7 @@ crontab -l > currentcron;
 
 # IF we should start the server immediately on boot
 if [ "$AUTOSTART" == "true" ]; then
-	$SCRIPTDIR/session.sh begin
+	# $SCRIPTDIR/session.sh begin
 else
 	#echo new cron into cron file
 	echo "$STARTCRON   $SCRIPTDIR/session.sh begin                              >> $LOGDIR/begin.log 2>&1"  >> newcron
