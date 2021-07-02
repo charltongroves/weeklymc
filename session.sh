@@ -103,7 +103,7 @@ server-run-ftb () {
     # This script is for starting a server. 
     cd $APPDIR/ftb
     echo "eula=true" > eula.txt
-    ./ServerStart
+    ./ServerStart.sh
     echo "[$(date)] ENDED server restart loop -- Goodbye" >> $LOGFILE
 }
 

@@ -66,10 +66,11 @@ aws s3 cp s3://$S3BUCKET/jars/spigot.jar $APPDIR/spigot.jar
 
 # install ftb
 mkdir $APPDIR/ftb
-aws s3 cp s3://$S3BUCKET/ftb.zip $APPDIR/ftb/ftb.zip
+aws s3 cp s3://$S3BUCKET/server.zip $APPDIR/ftb/server.zip
 cd $APPDIR/ftb
-unzip ftb.zip
+unzip server.zip
 echo "eula=true" > eula.txt
+chmod 700 ./ServerStart.sh
 cd $APPDIR
 
 # Get the plugins from S3
