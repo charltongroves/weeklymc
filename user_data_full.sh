@@ -26,7 +26,7 @@ cd $APPDIR
 MYIP=$(curl https://api.ipify.org/)
 
 # Update r53 domain
-cat <<EOF > $APPDIR/updateR53.json 
+cat <<EOF > $APPDIR/updateR53.json
 {
   "Comment": "Update Route53 to point to new private IP",
   "Changes": [
@@ -64,11 +64,6 @@ done
 # Get server jar from S3 if it doesn't exist.
 aws s3 cp s3://$S3BUCKET/jars/spigot.jar $APPDIR/spigot.jar
 
-# install ftb
-mkdir $APPDIR/ftb
-aws s3 cp s3://$S3BUCKET/server.zip $APPDIR/ftb/server.zip
-cd $APPDIR/ftb
-unzip server.zip
 echo "eula=true" > eula.txt
 chmod 700 ./ServerStart.sh
 cd $APPDIR
@@ -88,7 +83,7 @@ for f in $(ls "$SCRIPTDIR/plugins"); do
 done
 
 # Schedule CRON startup and shutdown.
-crontab -l > currentcron;
+# crontab -l > currentcron;
 
 # IF we should start the server immediately on boot
 if [ "$AUTOSTART" == "true" ]; then
@@ -101,10 +96,10 @@ else
 fi
 
 # Always run this script at reboot.
-echo "@reboot $SCRIPTDIR/user_data_thin.sh >> $LOGDIR/boot.log 2>&1" >> newcron
-echo "*/5 * * * * if curl -s http://169.254.169.254/latest/meta-data/spot/termination-time | grep -q .*T.*Z; then $SCRIPTDIR/session.sh end; fi " >> newcron
-echo "0 */6 * * * $SCRIPTDIR/session.sh end; sleep 10; $SCRIPTDIR/session.sh begin " >> newcron
+# echo "@reboot $SCRIPTDIR/user_data_thin.sh >> $LOGDIR/boot.log 2>&1" >> newcron
+# echo "*/5 * * * * if curl -s http://169.254.169.254/latest/meta-data/spot/termination-time | grep -q .*T.*Z; then $SCRIPTDIR/session.sh end; fi " >> newcron
+# echo "0 */6 * * * $SCRIPTDIR/session.sh end; sleep 10; $SCRIPTDIR/session.sh begin " >> newcron
 #install new cron file
-crontab newcron
-rm newcron currentcron
-sleep 86400 # In case we need to keep docker alive
+# crontab newcron
+# rm newcron currentcron
+# sleep 86400 # In case we need to keep docker alive
